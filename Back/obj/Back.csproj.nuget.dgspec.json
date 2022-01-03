@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Back/Back.csproj": {}
+    "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Fondement_Securite_Front/Back/Back.csproj": {}
   },
   "projects": {
-    "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Back/Back.csproj": {
+    "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Fondement_Securite_Front/Back/Back.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Back/Back.csproj",
+        "projectUniqueName": "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Fondement_Securite_Front/Back/Back.csproj",
         "projectName": "Back",
-        "projectPath": "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Back/Back.csproj",
+        "projectPath": "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Fondement_Securite_Front/Back/Back.csproj",
         "packagesPath": "/Users/alexandraddrz/.nuget/packages/",
-        "outputPath": "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Back/obj/",
+        "outputPath": "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Fondement_Securite_Front/Back/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/alexandraddrz/.config/NuGet/NuGet.Config"
