@@ -8,7 +8,9 @@ namespace Back.Services
     {
         public bool ValidateCertificate(X509Certificate2 clientCertificate)
         {
-            string[] allowedThumbprints = { "21A6E47A962C0E80A59517691FFA1D0500E3E548", "87A6E47A962C0E80A59517691FFA1D0500E3E548", "78A6E47A962C0E80A59517691FFA1D0500E3E548" };
+            //parent: D8EC407B0C890E158DB4112E2A88D9AB2DF6B018
+            //enfant: B521E19F8568DDD69CA025118DC95B4883637C64
+            string[] allowedThumbprints = { "B521E19F8568DDD69CA025118DC95B4883637C64" };
             if (allowedThumbprints.Contains(clientCertificate.Thumbprint))
             {
                 return true;

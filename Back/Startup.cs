@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Back.Model.Interfaces;
+using Back.Repositories;
+using Back.Services;
+using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +32,43 @@ namespace Back
         {
 
             services.AddControllers();
+
+            services.AddTransient<CertificateValidationService>();
+
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IMongoDbRepository, MongoDbRepository>();
+            
+
+            /*services.AddAuthentication(
+                CertificateAuthenticationDefaults.AuthenticationScheme)
+                .AddCertificate(options =>
+                {
+                    options.AllowedCertificateTypes = CertificateTypes.SelfSigned;
+                    options.Events = new CertificateAuthenticationEvents
+                    {
+                        OnCertificateValidated = context =>
+                        {
+                            var validationService = context.HttpContext.RequestServices.GetService<CertificateValidationService>();
+
+                            if (validationService.ValidateCertificate(context.ClientCertificate))
+                            {
+                                context.Success();
+                            }
+                            else
+                            {
+                                context.Fail("invalid cert");
+                            }
+
+                            return Task.CompletedTask;
+                        },
+                        OnAuthenticationFailed = context =>
+                        {
+                            context.Fail("invalid cert");
+                            return Task.CompletedTask;
+                        }
+                    };
+                });*/
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Back", Version = "v1" });
@@ -47,6 +88,8 @@ namespace Back
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

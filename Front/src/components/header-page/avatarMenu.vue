@@ -38,10 +38,10 @@
         </v-badge>
         <div
           class="d-inline-flex flex-column justify-center ms-3"
-          style="vertical-align:middle"
+          style="vertical-align: middle"
         >
           <span class="text--primary font-weight-semibold mb-n1">
-            John Doe
+            {{ username }}
           </span>
           <small class="text--disabled text-capitalize">Admin</small>
         </div>
@@ -52,9 +52,7 @@
       <!-- Logout -->
       <v-list-item link @click="logout">
         <v-list-item-icon class="me-2">
-          <v-icon size="22">
-            mdi-logout-variant
-          </v-icon>
+          <v-icon size="22"> mdi-logout-variant </v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>Logout</v-list-item-title>
@@ -65,11 +63,20 @@
 </template>
 
 <script>
+import store from "@/store/index.js";
+
 export default {
+  data: () => ({
+    username: "",
+  }),
+
   methods: {
     logout() {
       this.$router.push({ name: "login" });
     },
+  },
+  mounted() {
+    this.username = store.getters.getUsername;
   },
 };
 </script>

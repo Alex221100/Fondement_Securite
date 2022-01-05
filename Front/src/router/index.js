@@ -23,6 +23,14 @@ const routes = [
       layout: "blank",
     },
   },
+  {
+    path: "/create-account",
+    name: "create-account",
+    component: () => import("@/views/public/Create-Account.vue"),
+    meta: {
+      layout: "blank",
+    },
+  },
 ];
 
 const router = new VueRouter({

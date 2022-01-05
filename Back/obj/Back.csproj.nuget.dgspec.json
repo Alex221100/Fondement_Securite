@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Fondement_Securite_Front/Back/Back.csproj": {}
+    "C:\\Users\\adrz\\OneDrive\\Bureau\\Cours S7\\Fondement de la sécurité\\TP\\Fondement_Securite\\Back\\Back.csproj": {}
   },
   "projects": {
-    "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Fondement_Securite_Front/Back/Back.csproj": {
+    "C:\\Users\\adrz\\OneDrive\\Bureau\\Cours S7\\Fondement de la sécurité\\TP\\Fondement_Securite\\Back\\Back.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Fondement_Securite_Front/Back/Back.csproj",
+        "projectUniqueName": "C:\\Users\\adrz\\OneDrive\\Bureau\\Cours S7\\Fondement de la sécurité\\TP\\Fondement_Securite\\Back\\Back.csproj",
         "projectName": "Back",
-        "projectPath": "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Fondement_Securite_Front/Back/Back.csproj",
-        "packagesPath": "/Users/alexandraddrz/.nuget/packages/",
-        "outputPath": "/Users/alexandraddrz/Documents/Cours S7/Fondement de la sécurité/TP/Fondement_Securite_Front/Back/obj/",
+        "projectPath": "C:\\Users\\adrz\\OneDrive\\Bureau\\Cours S7\\Fondement de la sécurité\\TP\\Fondement_Securite\\Back\\Back.csproj",
+        "packagesPath": "C:\\Users\\adrz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\adrz\\OneDrive\\Bureau\\Cours S7\\Fondement de la sécurité\\TP\\Fondement_Securite\\Back\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "/Users/alexandraddrz/.config/NuGet/NuGet.Config"
+          "C:\\Users\\adrz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,6 +44,18 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.Certificate": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[2.14.1, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.14.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
@@ -61,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/x64/sdk/6.0.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

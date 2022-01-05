@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     token: null,
-    email: null,
+    username: null,
     rememberMe: false,
   },
   getters: {
@@ -21,10 +21,10 @@ export default new Vuex.Store({
      */
     isAuthenticated: (state) => state.token != null && state.token.length > 0,
     /**
-     * Gets the current email.
-     * @returns {*} The current email.
+     * Gets the current username.
+     * @returns {*} The current username.
      */
-    getEmail: (state) => state.email,
+    getUsername: (state) => state.username,
     /**
        * Gets the status of remember me.
        * @returns {Boolean} The status.
@@ -48,12 +48,12 @@ export default new Vuex.Store({
       state.token = null;
     },
     /**
-     * Sets the email of the user.
+     * Sets the username of the user.
      * @param {*} state The store state.
-     * @param {String} token The current email.
+     * @param {String} token The current username.
      */
-    setEmail(state, email) {
-      state.email = email;
+    setUsername(state, username) {
+      state.username = username;
     },
     /**
      * Sets the status of remember me.

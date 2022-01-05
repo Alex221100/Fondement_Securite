@@ -13,7 +13,6 @@
       </div>
     </v-app-bar>
 
-
     <v-main>
       <div class="app-content-container boxed-container pa-6">
         <router-view></router-view>
@@ -32,6 +31,5 @@ export default {
     AvatarMenu,
     Footer,
   },
-
 };
 </script>

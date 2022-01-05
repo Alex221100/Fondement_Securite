@@ -3,10 +3,17 @@
     <div class="auth-wrapper auth-v1">
       <div class="auth-inner">
         <v-card class="auth-card">
-
           <!-- title -->
           <v-card-text>
-            <p class="text-2xl font-weight-semibold text--primary mb-2 text-center">
+            <p
+              class="
+                text-2xl
+                font-weight-semibold
+                text--primary
+                mb-2
+                text-center
+              "
+            >
               Welcome 👋🏻
             </p>
             <p class="mb-2">
@@ -18,12 +25,12 @@
           <v-card-text>
             <v-form ref="form" v-model="valid">
               <v-text-field
-                v-model="email"
+                v-model="username"
                 outlined
-                label="Email"
+                label="Username"
                 hide-details
                 class="mb-3"
-                :rules="[emailRules]"
+                :rules="[usernameRules]"
               ></v-text-field>
 
               <v-text-field
@@ -38,13 +45,21 @@
               ></v-text-field>
 
               <div class="d-flex align-center justify-space-between flex-wrap">
-                <v-checkbox label="Remember Me" v-model="remindEmailAdress" hide-details class="me-3 mt-1">
+                <v-checkbox
+                  label="Remember Me"
+                  v-model="remindEmailAdress"
+                  hide-details
+                  class="me-3 mt-1"
+                >
                 </v-checkbox>
-
               </div>
 
               <v-btn block color="primary" class="mt-6" @click="login">
                 Login
+              </v-btn>
+
+              <v-btn block color="primary" class="mt-6" @click="createAccount">
+                Create Account
               </v-btn>
             </v-form>
           </v-card-text>
@@ -56,56 +71,66 @@
 
 <script>
 import store from "@/store/index.js";
-// eslint-disable-next-line object-curly-newline
+import authenticationService from "@/services/authentication/authenticationService";
+import Logger from "@/services/utils/logger.js";
+
 export default {
   data: () => ({
-      valid : true,
-      isPasswordVisible : false,
-      email : "",
-      password : "",
-      remindEmailAdress : ""
-    }),
+    valid: true,
+    isPasswordVisible: false,
+    username: "",
+    password: "",
+    remindEmailAdress: "",
+  }),
 
   methods: {
     passwordRules(password) {
-      if (!password) return "Le mot de passe est requis";
+      if (!password) return "A password is required";
       return true;
     },
-    emailRules(email) {
-      if (!email) return "L'email est requis";
+    usernameRules(username) {
+      if (!username) return "A username is required";
       return true;
     },
 
-    login() {
+    async login() {
       this.$refs.form.validate();
+
       try {
-        let result = false;
-        if (
-          this.email.includes("@progress-it.fr") &&
-          this.password == "123456"
-        ) {
-          result = true;
-        }
+        const userInfo = {
+          username: this.username,
+          password: this.password,
+        };
 
+        const response = await authenticationService.login(userInfo);
 
-        if (result) {
-          store.commit("setRememberMe", this.remindEmailAdress);
-          store.commit("setEmail", this.email);
-          this.$router.push({ name: "dashboard" });
+        switch (response.status) {
+          case 200:
+            store.commit("setRememberMe", this.remindEmailAdress);
+            store.commit("setUsername", this.username);
+            Logger.showInfo("Cette adresse email est inconnue");
+            this.$router.push({ name: "dashboard" });
+            break;
+          case 400:
+            break;
+          case 500:
+            break;
         }
       } catch (error) {
         console.log(error);
-        //Logger.showError(this.$t("LOGIN.AUTH_FAILED"));
+        //Logger.showError("Login ou mot de passe incorrect");
       }
+    },
+    createAccount() {
+      this.$router.push({ name: "create-account" });
     },
   },
   mounted() {
     this.remindEmailAdress = store.getters.getRememberMe;
-    if (this.remindEmailAdress){
+    if (this.remindEmailAdress) {
       this.email = store.getters.getEmail;
     }
   },
-
 };
 </script>
 
