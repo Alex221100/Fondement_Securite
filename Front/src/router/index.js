@@ -6,6 +6,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
+    beforeEnter: guardMyroute,
     component: () => import("../layout/layout.vue"),
     children: [
       {
@@ -47,6 +48,13 @@ const router = new VueRouter({
   routes,
 });
 
+function guardMyroute(to, from, next) {
+  if (from.name == 'certificate-authentication') {
+    next()
+  } else {
+    next('/login'); // go to '/login';
+  }
+}
 
 
 export default router;

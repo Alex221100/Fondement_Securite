@@ -19,21 +19,6 @@
             </p>
           </v-card-text>
 
-          <!-- Upload File-->
-          <div class="container">
-            <div class="large-12 medium-12 small-12 cell">
-              <label
-                >File
-                <input
-                  type="file"
-                  id="file"
-                  ref="file"
-                  @change="handleFileUpload"
-                />
-              </label>
-            </div>
-          </div>
-
           <!-- login form -->
           <v-card-text>
             <v-btn block color="primary" class="mt-6" @click="login">
@@ -61,28 +46,14 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await authenticationService.loginCertificate(
-          this.file
-        );
-        console.log(response);
-        const status = 200;
-        switch (status) {
-          case 200:
-            Logger.showSuccess("Vous êtes connectés");
-            this.$router.push({ name: "Home" });
-            break;
-          case 400:
-            break;
-          case 500:
-            break;
-        }
+        const response = await authenticationService.loginCertificate();
+        Logger.showError("The certificate is not valid");
       } catch (error) {
-        console.log(error);
+        Logger.showError("The certificate is not valid");
         //Logger.showError("Login ou mot de passe incorrect");
       }
-    },
-    handleFileUpload() {
-      this.file = this.$refs.file.files[0];
+      Logger.showSuccess("Vous êtes connectés");
+      this.$router.push({ name: "dashboard" });
     },
   },
 };

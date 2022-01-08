@@ -22,7 +22,7 @@ export default class authenticationService {
     /**
      * Login a user by certificate.
      */
-    static async loginCertificate(file) {
-        return await authenticationApi.loginCertificate(file);
+    static async loginCertificate() {
+        return await authenticationApi.loginCertificate();
     }
 }

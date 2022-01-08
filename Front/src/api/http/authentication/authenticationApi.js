@@ -24,7 +24,7 @@ export default class authenticationAPI {
     /**
          * Login a user by certificate.
          */
-    static async loginCertificate(file) {
-        return HttpClient.get(`${baseUrl}/certificate`, file, multipartConfig);
+    static async loginCertificate() {
+        return HttpClient.get(`http://localhost:5001/api/Authentication/certificate`, defaultConfig);
     }
 }
