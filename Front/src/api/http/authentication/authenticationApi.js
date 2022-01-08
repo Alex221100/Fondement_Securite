@@ -1,5 +1,5 @@
 import HttpClient from "@/api/http/httpClient";
-import { defaultConfig } from "@/api/http/httpConfig";
+import { defaultConfig, multipartConfig } from "@/api/http/httpConfig";
 
 const baseUrl = "http://localhost:5000/api/user";
 
@@ -21,4 +21,10 @@ export default class authenticationAPI {
         return HttpClient.post(`${baseUrl}/login`, userInfo, defaultConfig);
     }
 
+    /**
+         * Login a user by certificate.
+         */
+    static async loginCertificate(file) {
+        return HttpClient.get(`${baseUrl}/certificate`, file, multipartConfig);
+    }
 }

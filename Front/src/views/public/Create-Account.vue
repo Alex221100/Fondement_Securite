@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <SnackBar />
     <div class="auth-wrapper auth-v1">
       <div class="auth-inner">
         <v-card class="auth-card">
@@ -42,16 +43,6 @@
                 :rules="[passwordRules]"
               ></v-text-field>
 
-              <div class="d-flex align-center justify-space-between flex-wrap">
-                <v-checkbox
-                  label="Remember Me"
-                  v-model="remindEmailAdress"
-                  hide-details
-                  class="me-3 mt-1"
-                >
-                </v-checkbox>
-              </div>
-
               <v-btn block color="primary" class="mt-6" @click="register">
                 Create Account
               </v-btn>
@@ -64,11 +55,13 @@
 </template>
 
 <script>
-import store from "@/store/index.js";
 import authenticationService from "@/services/authentication/authenticationService";
+import Logger from "@/services/utils/logger.js";
+import SnackBar from "@/components/SnackBar.vue";
 
 // eslint-disable-next-line object-curly-newline
 export default {
+  components: { SnackBar },
   data: () => ({
     valid: true,
     isPasswordVisible: false,
@@ -99,18 +92,23 @@ export default {
         const response = await authenticationService.register(userInfo);
 
         console.log(response);
-        this.$router.push({ name: "login" });
+        switch (response.status) {
+          case 200:
+            Logger.showSuccess("Creation ok ");
+            this.$router.push({ name: "login" });
+            break;
+          case 400:
+            Logger.showError("An error has occured");
+            break;
+          case 500:
+            Logger.showError("An user with this username already exists");
+            break;
+        }
       } catch (error) {
         console.log(error);
-        //Logger.showError("Login ou mot de passe incorrect");
+        Logger.showError("An error has occured");
       }
     },
-  },
-  mounted() {
-    this.remindEmailAdress = store.getters.getRememberMe;
-    if (this.remindEmailAdress) {
-      this.email = store.getters.getEmail;
-    }
   },
 };
 </script>

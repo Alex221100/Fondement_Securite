@@ -1,8 +1,12 @@
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
+const multer = require('multer')
 const User = require("../models/UserModels");
 const bcrypt = require("bcryptjs");
 const Joi = require("@hapi/joi");
+const upload = multer({ dest: 'uploads/' })
+const fs = require('fs');
+const pem = require("pem");
 
 const registerSchema = Joi.object({
     username: Joi.string().min(6).required(),
@@ -22,7 +26,7 @@ router.post("/register", async (req, res) => {
     //Check if the user is already in the db
     const usernameExists = await User.findOne({ username: req.body.username });
 
-    if (usernameExists) return res.status(400).send("Username already exists");
+    if (usernameExists) return res.status(500).send("Username already exists");
 
     //hash passwords
     const salt = await bcrypt.genSalt(10);
@@ -58,6 +62,37 @@ router.post("/login", async (req, res) => {
         expiresIn: 300 // expires in 5min
     });
     res.header("auth-token", token).send(token);
+});
+
+router.post("/certificate", upload.single('file'), async (req, res) => {
+    //Verificate that the file is a certificate
+    if (req.file.originalname.split('.').pop() != "pfx") {
+        return res.status(400).send("The file is not a certificate");
+    };
+
+    pfx = fs.readFileSync(req.file.path, 'utf8');
+    console.log(pfx);
+    pem.readPkcs12(pfx, { p12Password: "1234" }, (err, cert) => {
+        console.log(cert);
+    });
+    /*try {
+        
+        caStore = pki.createCaStore([caCert]);
+    } catch (e) {
+        return res.status(400).send("Error in the verification of the certificate");
+    }
+    try {
+        console.log(pki.verifyCertificateChain(caStore, [cert]));
+    } catch (e) {
+        return handleResponse(new Error('Failed to verify certificate (' + e.message || e + ')'));
+    }
+    console.log(caCert);*/
+    /*allowedThumbprints = ["B521E19F8568DDD69CA025118DC95B4883637C64"];
+    if (allowedThumbprints.Contains(clientCertificate.Thumbprint)) {
+        res.status(200);
+    }*/
+
+    return res.status(400).send("The certificate is not correct");
 });
 
 module.exports = router;

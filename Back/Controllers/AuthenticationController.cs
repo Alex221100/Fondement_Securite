@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Back.Controllers.Model;
-using Back.Model;
-using Back.Model.Interfaces;
+using System.Security.Cryptography.X509Certificates;
 using Back.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Back.Controllers
 {
@@ -15,42 +9,22 @@ namespace Back.Controllers
     [Route("api/[controller]")]
     public class AuthenticationController : Controller
     {
-        //public readonly CertificateValidationService _certificateValidation;
-        public readonly IAuthenticationService _authenticationService;
+        public readonly CertificateValidationService _certificateValidation;
 
-        /*CertificateValidationService certificateValidation,*/
-        public AuthenticationController(IAuthenticationService authenticationService)
+        public AuthenticationController(CertificateValidationService certificateValidation)
         {
-            //_certificateValidation = certificateValidation ?? throw new ArgumentNullException(nameof(certificateValidation));
-            _authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
+            _certificateValidation = certificateValidation ?? throw new ArgumentNullException(nameof(certificateValidation));
         }
 
         [HttpGet]
-        public string Get()
+        [Route("certificate")]
+        public bool GetCertificateValidation()
         {
-            return "Welcome to Narnia";
+            return true;
+            //return _certificateValidation.ValidateCertificate(certificate);
+
         }
 
-        [HttpPost]
-        [Route("createaccount")]
-        public void PostAccount(User userInfo)
-        {
-            _authenticationService.CreateAccount(userInfo);
-        }
-
-        [HttpGet]
-        [Route("login")]
-        public string Login(User userInfo)
-        {
-            return _authenticationService.Login(userInfo);
-        }
-
-        [HttpPost]
-        [Route("logout")]
-        public void Logout(string token)
-        {
-            _authenticationService.Logout(token);
-        }
     }
 }
 

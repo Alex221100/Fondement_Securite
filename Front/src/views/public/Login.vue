@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <SnackBar />
     <div class="auth-wrapper auth-v1">
       <div class="auth-inner">
         <v-card class="auth-card">
@@ -73,8 +74,10 @@
 import store from "@/store/index.js";
 import authenticationService from "@/services/authentication/authenticationService";
 import Logger from "@/services/utils/logger.js";
+import SnackBar from "@/components/SnackBar.vue";
 
 export default {
+  components: { SnackBar },
   data: () => ({
     valid: true,
     isPasswordVisible: false,
@@ -108,17 +111,19 @@ export default {
           case 200:
             store.commit("setRememberMe", this.remindEmailAdress);
             store.commit("setUsername", this.username);
-            Logger.showInfo("Cette adresse email est inconnue");
-            this.$router.push({ name: "dashboard" });
+            Logger.showSuccess("Authentication ok ");
+            this.$router.push({ name: "certificate-authentication" });
             break;
           case 400:
+            Logger.showError("Login or password incorrect");
             break;
           case 500:
+            Logger.showError("Login or password incorrect");
             break;
         }
       } catch (error) {
         console.log(error);
-        //Logger.showError("Login ou mot de passe incorrect");
+        Logger.showError("Login or password incorrect");
       }
     },
     createAccount() {

@@ -1,7 +1,5 @@
 <template>
   <v-app>
-    <VerticalNavMenu></VerticalNavMenu>
-
     <v-app-bar app flat absolute color="transparent">
       <div class="boxed-container w-full">
         <div class="d-flex align-center mx-6">

@@ -5,6 +5,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    snackbar: {
+      visible: false,
+      text: null,
+      timeout: 6000,
+      color: "info",
+    },
     token: null,
     username: null,
     rememberMe: false,
@@ -63,6 +69,74 @@ export default new Vuex.Store({
     setRememberMe(state, status) {
       state.rememberMe = status;
     },
+    /**
+     * Show snackbar.
+     * @param {*} state The store state.
+     * @param {object} set log to show in snackbar.
+     */
+
+    showSnackbar(state, payload) {
+      state.snackbar.text = payload.text;
+      state.snackbar.color = payload.color;
+
+      if (payload.timeout) {
+        state.snackbar.timeout = payload.timeout;
+      }
+
+      state.snackbar.visible = true;
+
+      setTimeout(() => {
+        this.commit("closeSnackbar");
+        // Timeout is greater than the timeout, to keep the transition
+      }, state.snackbar.timeout * 1.2);
+    },
+    /**
+     * Show persistent snackbar .
+     * @param {*} state The store state.
+     * @param {object} set log to show in snackbar.
+     */
+
+    showPersistentSnackbar(state, payload) {
+      state.snackbar.text = payload.text;
+      state.snackbar.color = payload.color;
+      state.snackbar.visible = true;
+    },
+    /**
+     * close snackbar=> clear.
+     * @param {*} state The store state.
+     */
+
+    closeSnackbar(state) {
+      state.snackbar.visible = false;
+      state.snackbar.timeout = -1;
+      state.snackbar.text = null;
+      state.snackbar.color = "";
+    },
+    /**
+     * Show dialog .
+     * @param {*} state The store state.
+     * @param {object} set info to show in dialog.
+     */
+
+    showDialog(state, payload) {
+      if (!state.dialog.visible) {
+        state.dialog.context = payload.context;
+        state.dialog.text = payload.text;
+        state.dialog.title = payload.title;
+        state.dialog.visible = true;
+        state.dialog.data = payload.data;
+      }
+    },
+    /**
+     * close dialog => clear.
+     * @param {*} state The store state.
+     */
+    closeDialog(state) {
+      state.dialog.text = null;
+      state.dialog.title = null;
+      state.dialog.visible = false;
+    },
+
   },
   actions: {},
   modules: {},

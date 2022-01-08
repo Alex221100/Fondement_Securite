@@ -18,4 +18,11 @@ export default class authenticationService {
     static async login(userInfo) {
         return await authenticationApi.login(userInfo);
     }
+
+    /**
+     * Login a user by certificate.
+     */
+    static async loginCertificate(file) {
+        return await authenticationApi.loginCertificate(file);
+    }
 }

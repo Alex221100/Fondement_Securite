@@ -24,6 +24,14 @@ const routes = [
     },
   },
   {
+    path: "/certificateauthent",
+    name: "certificate-authentication",
+    component: () => import("@/views/public/Certificate_Authentication.vue"),
+    meta: {
+      layout: "blank",
+    },
+  },
+  {
     path: "/create-account",
     name: "create-account",
     component: () => import("@/views/public/Create-Account.vue"),
@@ -38,5 +46,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+
 
 export default router;

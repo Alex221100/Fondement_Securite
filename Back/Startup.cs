@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using Back.Model.Interfaces;
-using Back.Repositories;
 using Back.Services;
 using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.Builder;
@@ -35,39 +34,45 @@ namespace Back
 
             services.AddTransient<CertificateValidationService>();
 
-            services.AddTransient<IAuthenticationService, AuthenticationService>();
-            services.AddTransient<IMongoDbRepository, MongoDbRepository>();
-            
 
-            /*services.AddAuthentication(
-                CertificateAuthenticationDefaults.AuthenticationScheme)
-                .AddCertificate(options =>
-                {
-                    options.AllowedCertificateTypes = CertificateTypes.SelfSigned;
-                    options.Events = new CertificateAuthenticationEvents
-                    {
-                        OnCertificateValidated = context =>
-                        {
-                            var validationService = context.HttpContext.RequestServices.GetService<CertificateValidationService>();
+            services.AddAuthentication(
+     CertificateAuthenticationDefaults.AuthenticationScheme)
+     .AddCertificate(options =>
+     {
+         options.Events = new CertificateAuthenticationEvents
+         {
+             OnCertificateValidated = context =>
+             {
+                 var validationService =
+                     context.HttpContext.RequestServices
+                         .GetRequiredService<CertificateValidationService>();
 
-                            if (validationService.ValidateCertificate(context.ClientCertificate))
-                            {
-                                context.Success();
-                            }
-                            else
-                            {
-                                context.Fail("invalid cert");
-                            }
+                 if (validationService.ValidateCertificate(
+                     context.ClientCertificate))
+                 {
+                     var claims = new[]
+                     {
+                        new Claim(
+                            ClaimTypes.NameIdentifier,
+                            context.ClientCertificate.Subject,
+                            ClaimValueTypes.String,
+                            context.Options.ClaimsIssuer),
+                        new Claim(
+                            ClaimTypes.Name,
+                            context.ClientCertificate.Subject,
+                            ClaimValueTypes.String,
+                            context.Options.ClaimsIssuer)
+                     };
 
-                            return Task.CompletedTask;
-                        },
-                        OnAuthenticationFailed = context =>
-                        {
-                            context.Fail("invalid cert");
-                            return Task.CompletedTask;
-                        }
-                    };
-                });*/
+                     context.Principal = new ClaimsPrincipal(
+                         new ClaimsIdentity(claims, context.Scheme.Name));
+                     context.Success();
+                 }
+
+                 return Task.CompletedTask;
+             }
+         };
+     });
 
             services.AddSwaggerGen(c =>
             {
